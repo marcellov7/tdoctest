@@ -1,0 +1,377 @@
+---
+title: 'Config File Reference'
+description: 'Detailed guide to creating the config.json file for your TetiAI app'
+---
+
+# Config File Reference
+
+The `config.json` file is the primary configuration file for your TetiAI app, defining its metadata, appearance, authentication methods, and user-facing information. This document provides a detailed reference for creating and customizing your app's configuration.
+
+## Basic Structure
+
+A complete `config.json` file includes these main sections:
+
+```json
+{
+  "name": "APP_NAME",
+  "display_name": "App Display Name",
+  "description": "A detailed description of what your app does",
+  "logo": "https://path-to-your-logo.svg",
+  "docs_url": "https://your-documentation-url.com",
+  "support_url": "https://your-support-url.com",
+  "terms_url": "https://your-terms-url.com",
+  "author": {
+    "name": "Your Company",
+    "url": "https://your-company-website.com",
+    "logo": "https://path-to-your-company-logo.svg"
+  },
+  "version": "1.0.0",
+  "has_costs": false,
+  "security_schemes": {
+    // Authentication configuration
+  },
+  "categories": ["Category1", "Category2"],
+  "prompts": [
+    "Example prompt 1",
+    "Example prompt 2"
+  ],
+  "changelog": [
+    "Initial release"
+  ]
+}
+```
+
+## Required Fields
+
+These fields must be included in every `config.json` file:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | String | Internal name of the app (UPPERCASE with underscores) |
+| `display_name` | String | User-facing name of the app |
+| `description` | String | Brief description of what the app does |
+| `version` | String | Semantic version number (MAJOR.MINOR.PATCH) |
+| `categories` | Array | Categories that describe the app's functionality |
+
+## App Identity
+
+These fields define your app's identity and appearance:
+
+### name (Required)
+
+The internal name of your app, used for technical identification:
+
+```json
+"name": "GMAIL"
+```
+
+Guidelines:
+- Use UPPERCASE with underscores for spaces
+- Keep it short and recognizable
+- Avoid special characters except underscores
+
+### display_name (Required)
+
+The user-facing name of your app that appears in the marketplace:
+
+```json
+"display_name": "Gmail"
+```
+
+Guidelines:
+- Use proper capitalization
+- Keep it concise (50 characters max)
+- Should match the service name (if integrating a known service)
+
+### description (Required)
+
+A concise explanation of what your app does:
+
+```json
+"description": "The Gmail API is a RESTful API that enables sending, reading, and managing emails. This integration allows sending emails on behalf of the user."
+```
+
+Guidelines:
+- Keep under 200 characters
+- Focus on functionality and benefits
+- Avoid marketing language
+- Be clear and direct
+
+### logo
+
+URL to your app's logo image:
+
+```json
+"logo": "https://raw.githubusercontent.com/example/logos/main/gmail.svg"
+```
+
+Guidelines:
+- Use SVG format when possible
+- Square aspect ratio (1:1)
+- Recommended size: 512x512 pixels
+- Provide a direct URL to the image
+
+### author
+
+Information about you or your organization:
+
+```json
+"author": {
+  "name": "TetiAI",
+  "url": "https://teti.ai/",
+  "logo": "https://ucarecdn.com/5a7391c3-a0c7-4ad9-8d1c-c66ac9e6589f/tetiai_logo_icon.svg"
+}
+```
+
+Guidelines:
+- Provide accurate contact information
+- Use a square logo for the author logo
+- URL should point to your company website or GitHub profile
+
+## Documentation and Support
+
+These fields provide links to helpful resources:
+
+### docs_url
+
+Link to your app's documentation:
+
+```json
+"docs_url": "https://developers.google.com/gmail/api/guides"
+```
+
+### support_url
+
+Link to support resources:
+
+```json
+"support_url": "https://support.google.com/mail/"
+```
+
+### terms_url
+
+Link to your app's terms of service:
+
+```json
+"terms_url": "https://policies.google.com/terms"
+```
+
+## Version Control
+
+### version (Required)
+
+The current version number of your app:
+
+```json
+"version": "1.0.0"
+```
+
+Guidelines:
+- Follow semantic versioning (MAJOR.MINOR.PATCH)
+- Increment appropriately for updates:
+  - MAJOR: Incompatible API changes
+  - MINOR: New functionality (backward-compatible)
+  - PATCH: Bug fixes (backward-compatible)
+
+### changelog
+
+List of changes in each version:
+
+```json
+"changelog": [
+  "Initial release",
+  "Added support for drafts",
+  "Fixed authentication issue"
+]
+```
+
+Guidelines:
+- Most recent changes should be at the beginning
+- Keep entries concise but descriptive
+- Focus on user-facing changes
+
+## Categorization and Discovery
+
+### categories (Required)
+
+Categories that describe your app's functionality:
+
+```json
+"categories": ["Communication", "Productivity"]
+```
+
+Available categories:
+- Communication
+- Productivity
+- Finance
+- Marketing
+- Sales
+- Development
+- Design
+- Analytics
+- Customer Support
+- Human Resources
+- Project Management
+- Cloud Storage
+- Security
+- E-commerce
+- Healthcare
+- Education
+- Legal
+- AI & Machine Learning
+- IoT & Hardware
+- Media & Entertainment
+- Travel & Hospitality
+- Social Networking
+- Video Conferencing
+- Content Management
+- Utilities
+
+### prompts
+
+Example prompts users can try with your app:
+
+```json
+"prompts": [
+  "Show my recent emails",
+  "Search for emails from example@domain.com",
+  "Send an email to john@example.com",
+  "Show my email labels"
+]
+```
+
+Guidelines:
+- Include 5-10 diverse examples
+- Make them realistic and useful
+- Start with the most common use cases
+- Use natural language, not command syntax
+
+## Authentication Configuration
+
+The `security_schemes` object defines how your app authenticates with the external service:
+
+### OAuth 2.0 Authentication
+
+For apps requiring OAuth 2.0:
+
+```json
+"security_schemes": {
+  "oauth2": {
+    "location": "header",
+    "name": "Authorization",
+    "prefix": "Bearer",
+    "client_id": "your-client-id",
+    "client_secret": "your-client-secret",
+    "scope": "https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.readonly",
+    "authorize_url": "https://accounts.google.com/o/oauth2/auth",
+    "access_token_url": "https://oauth2.googleapis.com/token",
+    "refresh_token_url": "https://oauth2.googleapis.com/token",
+    "access_type": "offline",
+    "prompt": "consent",
+    "response_type": "code"
+  }
+}
+```
+
+### API Key Authentication
+
+For apps using API keys:
+
+```json
+"security_schemes": {
+  "api_key": {
+    "location": "header",
+    "name": "X-API-Key",
+    "prefix": "",
+    "fields": [
+      {
+        "name": "api_key",
+        "type": "password",
+        "required": true,
+        "description": "Your API key from the service dashboard"
+      }
+    ]
+  }
+}
+```
+
+For detailed authentication configuration options, see the [Authentication Guide](/app-development/authentication).
+
+## Additional Settings
+
+### has_costs
+
+Indicates if using the app may incur costs:
+
+```json
+"has_costs": true
+```
+
+Set to `true` if:
+- The app connects to a paid API or service
+- Usage may result in charges to the user's account
+- The app integrates with a premium service
+
+## Config.json Example
+
+Here's a complete example of a `config.json` file for a Gmail integration:
+
+```json
+{
+  "name": "GMAIL",
+  "display_name": "Gmail",
+  "description": "The Gmail API is a RESTful API that enables sending, reading, and managing emails. This integration allows sending emails on behalf of the user.",
+  "logo": "https://raw.githubusercontent.com/aipotheosis-labs/aipolabs-icons/refs/heads/main/apps/gmail.svg",
+  "docs_url": "https://developers.google.com/gmail/api/guides",
+  "support_url": "https://support.google.com/mail/",
+  "terms_url": "https://policies.google.com/terms",
+  "author": {
+    "name": "TetiAI",
+    "url": "https://teti.ai/",
+    "logo": "https://ucarecdn.com/5a7391c3-a0c7-4ad9-8d1c-c66ac9e6589f/tetiai_logo_icon.svg"
+  },
+  "version": "1.0.0",
+  "has_costs": false,
+  "security_schemes": {
+    "oauth2": {
+      "location": "header",
+      "name": "Authorization",
+      "prefix": "Bearer",
+      "client_id": "497832325649-p5s36a4sar97bfolosfdulj0gtjian8u.apps.googleusercontent.com",
+      "client_secret": "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",
+      "scope": "https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.compose https://www.googleapis.com/auth/gmail.insert https://www.googleapis.com/auth/gmail.modify https://mail.google.com/",
+      "authorize_url": "https://accounts.google.com/o/oauth2/auth",
+      "access_token_url": "https://oauth2.googleapis.com/token",
+      "refresh_token_url": "https://oauth2.googleapis.com/token",
+      "access_type": "offline",
+      "prompt": "consent",
+      "response_type": "code"
+    }
+  },
+  "categories": [
+    "Communication"
+  ],
+  "prompts": [
+    "Show my recent emails",
+    "Search for emails from example@domain.com",
+    "Get emails with subject 'Meeting'",
+    "Show unread emails",
+    "Find emails with attachments",
+    "List emails labeled as 'Important'",
+    "Send an email to john@example.com",
+    "Create a draft email",
+    "Show my email labels"
+  ],
+  "changelog": [
+    "Initial release"
+  ]
+}
+```
+
+## Next Steps
+
+After configuring your app with the `config.json` file, you'll need to:
+
+1. Define your app's functions in the [functions.json file](/app-development/functions-file)
+2. Set up [authentication](/app-development/authentication) for your app
+3. [Test](/app-development/testing) your app before submission
